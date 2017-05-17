@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.genius_quiz.gourav.geniusquiz.HomeActivity"
+    android:background="@drawable/backgound"
+    >
+
+    <TextView
+        android:layout_margin="@dimen/margin_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chooose option to enter the Quiz:-"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold|italic"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btnAptitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aptitude"
+        android:layout_marginStart="@dimen/ButtonSignupMarginStart"
+        android:layout_marginEnd="@dimen/ButtonSignupMarginEnd"
+        android:background="@drawable/button_boder"
+        android:layout_marginTop="@dimen/ButtonSignUpLayoutMarginTop"
+        android:layout_marginBottom="@dimen/ButtonSignUpLayoutMarginBottom"
+        android:textColor="@color/colorPrimary"
+        />
+
+</LinearLayout>
