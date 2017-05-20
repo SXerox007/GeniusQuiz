@@ -1,7 +1,7 @@
 package com.genius_quiz.gourav.geniusquiz;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,7 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_quiz);
         init();
         addElements();
         final RecyclerAdapter recyclerAdapter = new RecyclerAdapter(mQues, this);
@@ -75,7 +75,6 @@ public class QuizActivity extends AppCompatActivity {
 
         mQues.add(new Questions("what is ur question ?", "A", mOptions));
     }
-
 
 
 }
