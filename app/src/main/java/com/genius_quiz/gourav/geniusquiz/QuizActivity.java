@@ -1,75 +1,81 @@
 package com.genius_quiz.gourav.geniusquiz;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.genius_quiz.gourav.geniusquiz.adapter.RecyclerAdapter;
+import com.genius_quiz.gourav.geniusquiz.model.Questions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
-    //private RadioButton rbOptionA, rbOptionB, rbOptionC, rbOptiond;
-    // private String checkGender;
-    private ArrayList<DataModel> dataModels;
-    public RecyclerView recyclerView;
-    public DataModel dataModel;
+
+    private ArrayList<Questions> mQues;
+    private RecyclerView rvQuestionsList;
+    private TextView tvTotalMarks, tvCorrect, tvIncorrect, tvNotAttempted;
+    private LinearLayout llResult;
+    private Button btnSubmit;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_question);
+        setContentView(R.layout.activity_main);
         init();
-        dataModels.add(dataModel);
-        dataModels.add(dataModel);
-        dataModels.add(dataModel);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(QuizActivity.this, dataModels);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
-        recyclerView.setHasFixedSize(true);
-        // init();
-        //optionSelect();
+        addElements();
+        final RecyclerAdapter recyclerAdapter = new RecyclerAdapter(mQues, this);
+        rvQuestionsList.setLayoutManager(new LinearLayoutManager(this));
+        rvQuestionsList.setAdapter(recyclerAdapter);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                int mCorrect = 0, mIncorrect = 0;
+                llResult.setVisibility(View.VISIBLE);
+                HashMap<String, String> map = recyclerAdapter.getResultMap();
+                tvNotAttempted.setText("Not Attempted :" + String.valueOf((mQues.size() - map.size())));
+                for (Map.Entry<String, String> e : map.entrySet()) {
+                    if ("1".equals(e.getValue())) {
+                        mCorrect++;
+                    } else {
+                        mIncorrect++;
+                    }
+                }
+                tvCorrect.setText("Correct :" + String.valueOf(mCorrect));
+                tvIncorrect.setText("Incorrect :" + String.valueOf(mIncorrect));
+                tvTotalMarks.setText("Marks obtained :" + String.valueOf(mCorrect));
+            }
+        });
     }
-/*
-    public boolean onRadioButtonClicked(final View view) {
-        boolean flag = ((RadioButton) view).isChecked();
-        return flag;
-    }
-    */
 
-    /**
-     * option select in radio group
-     */
-    /*
-    private void optionSelect() {
-        if (onRadioButtonClicked(rbOptionA)) {
-            checkGender = rbOptionA.getText().toString();
-        } else if (onRadioButtonClicked(rbOptionB)) {
-            checkGender = rbOptionB.getText().toString();
-        } else if (onRadioButtonClicked(rbOptionC)) {
-            checkGender = rbOptionC.getText().toString();
-        } else if (onRadioButtonClicked(rbOptiond)) {
-            checkGender = rbOptiond.getText().toString();
-        }
+    private void init() {
+        mQues = new ArrayList<Questions>();
+        rvQuestionsList = (RecyclerView) findViewById(R.id.rvQuestionList);
+        llResult = (LinearLayout) findViewById(R.id.llResult);
+        tvTotalMarks = (TextView) findViewById(R.id.tvTotalMarks);
+        tvCorrect = (TextView) findViewById(R.id.tvCorrect);
+        tvIncorrect = (TextView) findViewById(R.id.tvIncorrect);
+        tvNotAttempted = (TextView) findViewById(R.id.tvNotAttempted);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
     }
-    */
 
-    /**
-     * initilization
-     */
-    /*
-    private void init() {
-        rbOptionA = (RadioButton) findViewById(R.id.radio_option_a);
-        rbOptionB = (RadioButton) findViewById(R.id.radio_option_b);
-        rbOptionC = (RadioButton) findViewById(R.id.radio_option_c);
-        rbOptiond = (RadioButton) findViewById(R.id.radio_option_d);
-        checkGender = "";
+    public void addElements() {
+        ArrayList<String> mOptions = new ArrayList<String>();
+        mOptions.add("hello");
+        mOptions.add("bye");
+        mOptions.add("stay");
+        mOptions.add("cool");
+
+        mQues.add(new Questions("what is ur question ?", "A", mOptions));
     }
-    */
-    private void init() {
-        recyclerView = (RecyclerView) findViewById(R.id.rvHome);
-        dataModels = new ArrayList<>();
-        dataModel = new DataModel("1. The speed of 60m per sec is the same as:", "40.3 km/h", "57.16 km/h", "51.16 km/h", "none of these");
-    }
+
+
 
 }
